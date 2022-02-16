@@ -1,1 +1,1 @@
-matlab-app-licensing
+### `matlab-app-licensing`
