@@ -21,7 +21,7 @@ arguments
     LocalFilePath (1,:) char
     Token (1,:) char
     Optn.Branch (1,:) char = ''
-    Optn.CommitMessage (1,:) char = 'Unknown commit.'
+    Optn.CommitMessage (1,:) char = ''
 end
 BaseAPI = 'https://api.github.com';
 URL = [BaseAPI, '/repos/', UserName, '/', RepoName, '/contents/', FileRelativePath];
@@ -36,9 +36,13 @@ HeaderFields = {'Authorization', ['token ', Token];...
 if ~isempty(Optn.Branch)   
     Body.branch = Optn.Branch;
 end
-Body.message = Optn.CommitMessage;
 Body.content = EncodedContent;
 Options = weboptions(HeaderFields = HeaderFields, RequestMethod = 'put');
+if isempty(Optn.CommitMessage)
+    Body.message = ['Commited from ', Options.UserAgent];
+else
+    Body.message = Optn.CommitMessage;
+end
 Response = webwrite(URL, Body, Options);
 end
 

@@ -21,7 +21,7 @@ arguments
     UpdatedFilePath (1,:) char
     Token (1,:) char
     Optn.Branch (1,:) char = ''
-    Optn.CommitMessage (1,:) char = 'Unknown commit.'
+    Optn.CommitMessage (1,:) char = ''
 end
 if isempty(Optn.Branch)
     [~, GetRequest] = githubGet(UserName, RepoName, OriginalFilePath, Token = Token);
@@ -37,10 +37,14 @@ end
 EncodedContent = matlab.net.base64encode(Content);
 HeaderFields = {'Authorization', ['token ', Token];...
     'Accept', 'application/vnd.github.v3+json'};
-Body.message = Optn.CommitMessage;
 Body.sha = GetRequest.sha;
 Body.content = EncodedContent;
 Options = weboptions(HeaderFields = HeaderFields, RequestMethod = 'put');
+if isempty(Optn.CommitMessage)
+    Body.message = ['Commited from ', Options.UserAgent];
+else
+    Body.message = Optn.CommitMessage;
+end
 Response = webwrite(GetRequest.url, Body, Options);
 end
 
