@@ -10,7 +10,8 @@ function [Output, GetRequest] = githubGet(UserName, RepoName, FilePath, OutputTy
 % 
 % Optional arguments (name-value pair)   
 %     Token (1,:) char      : Personal Access Token (PAT), generate from https://github.com/settings/tokens. Required for a private repo. 
-%     Branch (1,:) char     : Branch name (default = 'main')
+%     Branch (1,:) char     : If left blank, the default branch will be used (main or master)
+%
 % Written by Adib Yusof (2022) | adib.yusof@upm.edu.my
 arguments
     UserName (1,:) char
