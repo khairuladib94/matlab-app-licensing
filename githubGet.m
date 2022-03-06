@@ -21,7 +21,7 @@ arguments
     Optn.Token  (1,:) char = ''
     Optn.Branch (1,:) char = ''
 end
-BaseAPI = 'htts://api.github.com';
+BaseAPI = 'https://api.github.com';
 URL = [BaseAPI, '/repos/', UserName, '/', RepoName, '/contents/', FilePath];
 if ~isempty(Optn.Branch)
     URL = [URL, '?ref=', Optn.Branch];
