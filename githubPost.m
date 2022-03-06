@@ -15,13 +15,13 @@ function Response = githubPost(UserName, RepoName, FileRelativePath, LocalFilePa
 %
 % Written by Adib Yusof (2022) | adib.yusof@upm.edu.my
 arguments
-    UserName (1,:) char
-    RepoName (1,:) char
-    FileRelativePath (1,:) char
-    LocalFilePath (1,:) char
-    Token (1,:) char
-    Optn.Branch (1,:) char = ''
-    Optn.CommitMessage (1,:) char = ''
+    UserName            (1,:) char
+    RepoName            (1,:) char
+    FileRelativePath    (1,:) char
+    LocalFilePath       (1,:) char
+    Token               (1,:) char
+    Optn.Branch         (1,:) char = ''
+    Optn.CommitMessage  (1,:) char = ''
 end
 BaseAPI = 'https://api.github.com';
 URL = [BaseAPI, '/repos/', UserName, '/', RepoName, '/contents/', FileRelativePath];

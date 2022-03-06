@@ -1,9 +1,9 @@
 function GeneratedKey = licenseKeygen(CharNum, Optn)
 % Generates a random key of numbers or letters or both.
 arguments
-    CharNum (1,:) {mustBeInteger, mustBePositive} = 16
-    Optn.UseNumber (1,1) logical = true
-    Optn.UseLetter (1,1) logical = true
+    CharNum         (1,:) {mustBeInteger, mustBePositive} = 16
+    Optn.UseNumber  (1,1) logical = true
+    Optn.UseLetter  (1,1) logical = true
     Optn.PartLength (1,1) {mustBeInteger, mustBeNonnegative} = 4;
 end
 Mixture = Optn.UseNumber + Optn.UseLetter;

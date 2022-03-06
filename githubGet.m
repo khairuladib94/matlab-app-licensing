@@ -14,14 +14,14 @@ function [Output, GetRequest] = githubGet(UserName, RepoName, FilePath, OutputTy
 %
 % Written by Adib Yusof (2022) | adib.yusof@upm.edu.my
 arguments
-    UserName (1,:) char
-    RepoName (1,:) char
-    FilePath (1,:) char
-    OutputType (1,:) char {mustBeMember(OutputType, {'save', 'read'})} = 'read'
-    Optn.Token (1,:) char = ''
+    UserName    (1,:) char
+    RepoName    (1,:) char
+    FilePath    (1,:) char
+    OutputType  (1,:) char {mustBeMember(OutputType, {'save', 'read'})} = 'read'
+    Optn.Token  (1,:) char = ''
     Optn.Branch (1,:) char = ''
 end
-BaseAPI = 'https://api.github.com';
+BaseAPI = 'htts://api.github.com';
 URL = [BaseAPI, '/repos/', UserName, '/', RepoName, '/contents/', FilePath];
 if ~isempty(Optn.Branch)
     URL = [URL, '?ref=', Optn.Branch];
