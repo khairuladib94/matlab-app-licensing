@@ -29,14 +29,16 @@ try Lic = delimited2table(githubGet(UserName, RepoName, 'license-database.csv', 
         case 'Close'
             IsCloseSelected = true;
     end
-catch ME    % Catch Internet connection error
-    Selection = uiconfirm(MainAppUIFigure, 'Error connecting to the Internet.', ...
-        AppName, Options = {'Try Again', 'Close'});
-    switch Selection
-        case 'Try Again'
-            checkDeviceRegistration(MainApp, UserName, RepoName, Token);
-        case 'Close'
-            IsCloseSelected = true;
+catch Exception    % Catch Internet connection error
+    if contains(Exception.identifier, 'connection', IgnoreCase = true)
+        Selection = uiconfirm(MainAppUIFigure, 'Error connecting to the Internet.', AppName, ...
+            Options = {'Try Again', 'Close'});
+        switch Selection
+            case 'Try Again'
+                checkDeviceRegistration(MainApp, UserName, RepoName, Token);
+            case 'Close'
+                IsCloseSelected = true;
+        end
     end
 end
 end
