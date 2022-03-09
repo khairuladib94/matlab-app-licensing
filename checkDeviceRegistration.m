@@ -11,8 +11,17 @@ end
 DeviceID = generateDeviceId;
 try Lic = delimited2table(githubGet(UserName, RepoName, 'license-database.csv', Token = Token));
 
-catch ME
-
+    MainAppProperties = properties(MainApp);
+    IsUIFigure = false;
+    for p = 1 : numel(MainAppProperties)
+        Property = MainApp.(MainAppProperties{p});
+        IsUIFigure = isa(Property, 'matlab.ui.Figure');
+        if IsUIFigure
+            MainAppUIFigure = Property;
+            break;
+        end
+    end
+    
 end
 MatchedDeviceIdx = find(Lic.DeviceID == DeviceID); %#ok<EFIND>
 if isempty(MatchedDeviceIdx)
