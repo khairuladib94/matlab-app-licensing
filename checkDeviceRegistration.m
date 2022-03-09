@@ -1,15 +1,18 @@
-function IsDeviceRegistered = checkDeviceRegistration(AppObj, AppUIFigure, AppName, UserName, RepoName, Token)
+function IsCloseSelected = checkDeviceRegistration(MainApp, UserName, RepoName, Token)
 arguments
-    AppObj
-    AppUIFigure     matlab.ui.Figure
-    AppName
+    MainApp
     UserName
     RepoName
     Token
 end
-%   Check whether the device has been registered and is associated to a valid license
+IsCloseSelected = false;
 DeviceID = generateDeviceId;
+
 try Lic = delimited2table(githubGet(UserName, RepoName, 'license-database.csv', Token = Token));
+    MatchedDeviceIdx = find(Lic.DeviceID == DeviceID);
+    if ~isempty(MatchedDeviceIdx) && any(datetime(Lic.ValidUntil(MatchedDeviceIdx)) > datetime)
+        return;     % License is registered and still valid
+    end
 
     MainAppProperties = properties(MainApp);
     IsUIFigure = false;
@@ -22,15 +25,27 @@ try Lic = delimited2table(githubGet(UserName, RepoName, 'license-database.csv', 
         end
     end
     
-end
-MatchedDeviceIdx = find(Lic.DeviceID == DeviceID); %#ok<EFIND>
-if isempty(MatchedDeviceIdx)
-    Selection = uiconfirm(AppUIFigure, 'App is not activated.', AppName, Options = {'Activate', 'Close'});
+    AppName = MainAppUIFigure.Name;
+    if isempty(MatchedDeviceIdx)    % License is not registered
+        Selection = uiconfirm(MainAppUIFigure, 'App is not activated.', AppName, Options = {'Activate', 'Close'});
+    elseif ~isempty(MatchedDeviceIdx) && ~any(datetime(Lic.ValidUntil(MatchedDeviceIdx)) > datetime)     % License is registered but not valid
+            Selection = uiconfirm(MainAppUIFigure, 'The license has expired. Please activate a new license.', AppName, Options = {'Activate', 'Close'});
+    end
+   
     switch Selection
         case 'Activate'
-            appactivation(AppUIFigure, AppName, UserName, RepoName, Token);
+            appactivation(MainApp, UserName, RepoName, Token);
         case 'Close'
-            delete(AppObj);
+            IsCloseSelected = true;
+    end
+catch ME    % Catch Internet connection error
+    Selection = uiconfirm(MainAppUIFigure, 'Error connecting to the Internet.', ...
+        AppName, Options = {'Try Again', 'Close'});
+    switch Selection
+        case 'Try Again'
+            checkDeviceRegistration(MainApp, UserName, RepoName, Token);
+        case 'Close'
+            IsCloseSelected = true;
     end
 end
 end
