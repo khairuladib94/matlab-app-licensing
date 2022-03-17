@@ -17,14 +17,18 @@ arguments
     UserName    (1,:) char
     RepoName    (1,:) char
     FilePath    (1,:) char
-    OutputType  (1,:) char {mustBeMember(OutputType, {'save', 'read'})} = 'read'
+    OutputType  (1,:) char {mustBeMember(OutputType, {'save', 'read', 'status'})} = 'read'
     Optn.Token  (1,:) char = ''
     Optn.Branch (1,:) char = ''
 end
 BaseAPI = 'https://api.github.com';
 URL = [BaseAPI, '/repos/', UserName, '/', RepoName, '/contents/', FilePath];
-if ~isempty(Optn.Branch)
-    URL = [URL, '?ref=', Optn.Branch];
+if strcmp(OutputType, 'status')
+    URL = [BaseAPI, '/repos/', UserName, '/', RepoName];
+else
+    if ~isempty(Optn.Branch)
+        URL = [URL, '?ref=', Optn.Branch];
+    end
 end
 HeaderFields = {};
 if ~isempty(Optn.Token)
@@ -32,12 +36,18 @@ if ~isempty(Optn.Token)
 end
 HeaderFields = [HeaderFields; {'Accept', 'application/vnd.github.v3+json'}];
 Options = weboptions(HeaderFields = HeaderFields);
-GetRequest = webread(URL, Options);
-switch OutputType
-    case 'read'
-        Output = char(matlab.net.base64decode(GetRequest.content));
-    case 'save'
-        Output = websave(FilePath, GetRequest.download_url, Options);
+try GetRequest = webread(URL, Options);
+    switch OutputType
+        case 'read'
+            Output = char(matlab.net.base64decode(GetRequest.content));
+        case 'save'
+            Output = websave(FilePath, GetRequest.download_url, Options);
+        case 'status'
+            Output = true;
+    end
+catch
+    GetRequest = false;
+    Output = false;
 end
 end
 
