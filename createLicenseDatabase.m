@@ -1,6 +1,6 @@
 function [Status, Details] = createLicenseDatabase(UserName, RepoName, Token)
 % Create a *.csv file to store all license keys and associated details
-DatabaseHeader = {'LicenseKey', 'UserEmail', 'ValidUntil' ,'DeviceID'};
+DatabaseHeader = {'LicenseKey', 'UserEmail', 'ValidUntil' ,'DeviceID'; '', '', '', ''};
 AppName = 'MATLAB App License Manager';
 FileName = 'license-database.csv';
 FolderPath = fullfile(userpath, AppName);
