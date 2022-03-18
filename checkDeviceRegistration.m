@@ -26,7 +26,7 @@ try Lic = delimited2table(githubGet(UserName, RepoName, 'license-database.csv', 
    
     switch Selection
         case 'Activate'
-            appactivation(MainApp, UserName, RepoName, Token);
+            AppActivation(MainApp, UserName, RepoName, Token);
         case 'Close'
             IsCloseSelected = true;
     end
