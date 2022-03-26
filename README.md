@@ -1,7 +1,7 @@
 ## Licensing system for MATLAB apps
 > *This project is still a work in progress 🚧. Issues and pull requests are highly appreciated*
 
-*Do you have an developed using MATLAB App Designer that you want to distribute but wish to control who can use it?\
+*Do you have an app developed using MATLAB App Designer that you want to distribute but wish to control who can use it?\
 In simple words, you wish to grant app licenses to specific users.*
 
 ### Important notes
