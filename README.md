@@ -10,7 +10,7 @@ In simple words, you wish to grant app licenses to specific users.*
 
 ### Step 1: Setting up the license database
 1. Create a GitHub account if you don't have one yet.
-2. Create a private repository. If you already have a repository specified for the codebase of the app development, you can use that instead. This repository will be referred to as `app-development`.
+2. Create a private repository. If you already have a repository that you use as the codebase of the app development, you can use that instead. This repository will be referred to as `app-development`.
 3. Add `matlab-app-licensing` repository as a submodule of `app-development` ([further reading](https://www.mathworks.com/help/matlab/matlab_prog/add-git-submodules.html)).
 4. Add the submodule folder to MATLAB path.
 5. Run [`LicenseManager.mlapp`](LicenseManager.mlapp) and follow the instructions in the app.
