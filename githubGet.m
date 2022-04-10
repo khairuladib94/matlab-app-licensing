@@ -6,7 +6,7 @@ function [Output, GetRequest] = githubGet(UserName, RepoName, FilePath, OutputTy
 %     UserName (1,:) char   : GitHub's username
 %     RepoName (1,:) char   : The repo name
 %     FilePath (1,:) char   : The file name or its relative path if it resides in a folder
-%     OutputType (1,:) char : 'read' (default), 'save' or status; 'read' returns contents of the file, 'save' downloads the file.
+%     OutputType (1,:) char : 'read' (default), 'save' or 'status'; 'read' returns contents of the file, 'save' downloads the file.
 %                              'status' returns whether the repo (FilePath = '') or a file in the repo (FilePath = <FileName>) exists (logical)
 % 
 % Optional arguments (name-value pair)   

@@ -7,10 +7,11 @@ FolderPath = fullfile(userpath, AppName);
 mkdir(FolderPath);
 FilePath = fullfile(FolderPath, FileName);
 writecell(DatabaseHeader, FilePath);
-try Details = githubPost(UserName, RepoName, FileName, FilePath, ...
+try
+    Details = githubPost(UserName, RepoName, FileName, FilePath, ...
         Token, CommitMessage = 'Create license database file');
-    Status = true; 
-catch 
+    Status = true;
+catch
     Status = false;
     Details = 'Error uploading file';
 end
